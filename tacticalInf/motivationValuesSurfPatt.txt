@@ -1,0 +1,228 @@
+Author: Jonathan Ting
+Date: 24/9/24
+This file records the links added in the process of interactive structure learning of Bayesian networks (BNs) that predict 4 different classes of palladium nanoparticle atoms and their corresponding motivation values. The aim of the exercise is to generate plausible BNs that could provide insights for experimental designs of palladium nanoparticles. 
+
+Instructions to open CSV files in OpenMarkov (version 0.3.4) and settings for BN learning:
+- Run OpenMarkov-0.3.4.exe
+- Tools > Learning 
+- > General
+	- Database: locate the data CSV file
+	- Algorithm: Hill climbing
+	- > Options: 
+		- Metric: K2
+		- Alpha parameter (Laplace-like correction): 0.5
+	- Learning type: Interactive learning
+- > Model network
+	- Choose Model Net: Do not use any model network
+- > Preprocessing
+	- Discretize: Equal frequency intervals
+	- Treat missing values: Default (Specify for each variable -- Keep records with missing values)
+	- Use all variables
+	- Check same number of intervals: 3
+- > Learn
+- A tab named 'Interactive learning' containing link editing descriptions (e.g. Add link: scn --> surfAtomClusters) and the corresponding Motivation values will then appear.
+
+The settings and rules of interactive structure learning is as follow:
+- Check "Only allowed edits" (prevents cyclic DAG) and "Only positive edits" (prevents negative scores)
+- Order need to be strictly followed because each edition might alter the following edition options
+- Applying link editions means deciding that causal relationship is plausible in the stated direction according to domain expertise, while blocking indicates that it is believed/assumed that the directional causal relationship is not possible.
+- Blocked editions could be found under "Show blocked" and "Undo" button is available if mistakes were made accidentally
+- The Interactive learning tab shows at most 8 edition options simultaneously.
+
+Standardised procedure:
+- Come up with a set of domain knowledge rules.
+- Follow the domain knowledge rule set (the degree to which it is followed could be set as a variable).
+- Always consider the edit with the greatest motivation value first.
+- Don't need to bother blocking the edits until all remaining edits proposed are unacceptable, blocking doesn't modify the motivation values of any edit.
+
+The calculation of the weighted probability of each causal path was conducted and tabulated in the Excel spreadsheet in this folder (manual version used to be ProbCalc.xlsx, now superseded by pathMotivations_{METRIC}.xlsx). Column A signifies the output variable. Columns B-D the motivation values of the links that are involved in the paths identified. The variables involved in the calculation of weighted path probability are shown in columns E-H. Below is a brief explanation of the variables:
+PathProbability = product of the motivation values of the links involved in a given path
+PathPercentage = PathProbability in percentage
+
+Remaining questions:
+- What does proposal of inverting and removing links mean? If it means that by doing so the structure of the network better fits the joint probability then does it mean that the motivation values can't be used as reliable measure for path probability?
+- How significant are the differences in motivation values between options of edits? Are they distinguishable statistically?
+- What happens when you use different metric scores (e.g. K2)? Some of the links are different (in terms of absence/presence), but the causal directions are consistent due to the enforcement of domain knowledge rules encoding.
+- When can we safely ignore causal link suggestions (motivation values that are small enough to neglect)?
+
+
+Domain Knowledge Rules Encoded:
+- General direction in causal chains: Coordination features > Angular features > Bond orientational order features > Symmetrical features > Positional features > Atom classes
+- Features within each group/layer cannot cause each other
+
+# All_Classes
+Add link: scn --> class1	432.18
+Add link: scn --> q2avg	281.05
+Add link: scn --> ba1avg	278.05
+Add link: scn --> centParam	271.72
+Add link: gcn --> rad	266.38
+Add link: scn --> q2	262.38
+Add link: scn --> chi6	249.13
+Add link: scn --> class2	210.08
+Add link: chi3 --> q6	179.98
+Add link: chi3 --> q6avg	101.94
+Add link: q6q6 --> ba1max	98.49
+Add link: chi3 --> q4avg	85.05
+Add link: chi3 --> centParam	75.85
+Add link: q6q6 --> q6avg	73.20
+Add link: scn --> class3	64.91
+Add link: q2avg --> rad	49.52
+Add link: q6q6 --> q12avg	49.32
+Add link: q6avg --> class2	49.23
+Add link: q6avg --> class3	49.09
+Add link: chi6 --> q2	35.67
+Add link: ba1avg --> q12avg	34.55
+Add link: scn --> q6avg	25.06
+Add link: gcn --> q2avg	19.93
+Add link: scn --> chi3	18.69
+Add link: q6q6 --> chi3	34.42
+Add link: scn --> q12avg	18.49
+Add link: q6q6 --> chi6	14.91
+Add link: ba1avg --> centParam	9.82
+Add link: q6q6 --> q4avg	8.86
+Add link: centParam --> class4	4.93
+Add link: scn --> q6	4.90
+Add link: ba1max --> q6	15.83
+Add link: ba1avg --> q4avg	4.62
+Add link: scn --> ba1max	4.51
+Add link: gcn --> ba1avg	4.08
+Add link: scn --> q4avg	3.40
+Add link: scn --> rad	0.61
+
+# Class 1
+Add link: scn --> class1	432.18
+Add link: scn --> q2avg	281.05
+Add link: scn --> ba1avg	278.05
+Add link: scn --> centParam	271.72
+Add link: gcn --> rad	266.38
+Add link: scn --> q2	262.38
+Add link: scn --> chi6	249.13
+Add link: chi3 --> q6	179.98
+Add link: chi3 --> q6avg	101.94
+Add link: q6q6 --> ba1max	98.49
+Add link: chi3 --> q4avg	85.05
+Add link: chi3 --> centParam	75.85
+Add link: q6q6 --> q6avg	73.20
+Add link: q2avg --> rad	49.52
+Add link: q6q6 --> q12avg	49.32
+Add link: chi6 --> q2	35.67
+Add link: ba1avg --> q12avg	34.55
+Add link: scn --> q6avg	25.06
+Add link: gcn --> q2avg	19.93
+Add link: scn --> chi3	18.69
+Add link: q6q6 --> chi3	34.42
+Add link: scn --> q12avg	18.49
+Add link: q6q6 --> chi6	14.91
+Add link: ba1avg --> centParam	9.82
+Add link: q6q6 --> q4avg	8.86
+Add link: scn --> q6	4.90
+Add link: ba1avg --> q4avg	4.62
+Add link: scn --> ba1max	4.51
+Add link: gcn --> ba1avg	4.08
+Add link: scn --> q4avg	3.40
+Add link: ba1avg --> q6	2.54
+Add link: scn --> rad	0.61
+
+# Class 2
+Add link: scn --> q2avg	281.05
+Add link: scn --> ba1avg	278.05
+Add link: scn --> centParam	271.72
+Add link: gcn --> rad	266.38
+Add link: scn --> q2	262.38
+Add link: scn --> chi6	249.13
+Add link: scn --> class2	210.08
+Add link: chi3 --> q6	179.98
+Add link: chi3 --> q6avg	101.94
+Add link: q6q6 --> ba1max	98.49
+Add link: chi3 --> q4avg	85.05
+Add link: chi3 --> centParam	75.85
+Add link: q6q6 --> q6avg	73.20
+Add link: q2avg --> rad	49.52
+Add link: q6q6 --> q12avg	49.32
+Add link: q6avg --> class2	49.23
+Add link: chi6 --> q2	35.67
+Add link: ba1avg --> q12avg	34.55
+Add link: scn --> q6avg	25.06
+Add link: gcn --> q2avg	19.93
+Add link: scn --> chi3	18.69
+Add link: q6q6 --> chi3	34.42
+Add link: scn --> q12avg	18.49
+Add link: q6q6 --> chi6	14.91
+Add link: ba1avg --> centParam	9.82
+Add link: q6q6 --> q4avg	8.86
+Add link: scn --> q6	4.90
+Add link: ba1avg --> q4avg	4.62
+Add link: ba1max --> q6	15.83
+Add link: scn --> ba1max	4.51
+Add link: gcn --> ba1avg	4.08
+Add link: scn --> q4avg	3.40
+Add link: scn --> rad	0.61
+
+# Class 3
+Add link: scn --> q2avg	281.05
+Add link: scn --> ba1avg	278.05
+Add link: scn --> centParam	271.72
+Add link: gcn --> rad	266.38
+Add link: scn --> q2	262.38
+Add link: scn --> chi6	249.13
+Add link: chi3 --> q6	179.98
+Add link: chi3 --> q6avg	101.94
+Add link: q6q6 --> ba1max	98.49
+Add link: chi3 --> q4avg	85.05
+Add link: chi3 --> centParam	75.85
+Add link: q6q6 --> q6avg	73.20
+Add link: scn --> class3	64.91
+Add link: q2avg --> rad	49.52
+Add link: q6avg --> class3	49.09
+Add link: chi6 --> q2	35.67
+Add link: q6q6 --> q12avg	49.32
+Add link: ba1avg --> q12avg	34.55
+Add link: scn --> q6avg	25.06
+Add link: gcn --> q2avg	19.93
+Add link: scn --> chi3	18.69
+Add link: q6q6 --> chi3	34.42
+Add link: scn --> q12avg	18.49
+Add link: q6q6 --> chi6	14.91
+Add link: ba1avg --> centParam	9.82
+Add link: q6q6 --> q4avg	8.86
+Add link: scn --> q6	4.90
+Add link: ba1max --> q6	15.83
+Add link: ba1avg --> q4avg	4.62
+Add link: scn --> ba1max	4.51
+Add link: gcn --> ba1avg	4.08
+Add link: scn --> q4avg	3.40
+Add link: scn --> rad	0.61
+
+# Class 4
+Add link: scn --> q2avg	281.05
+Add link: scn --> ba1avg	278.05
+Add link: scn --> centParam	271.72
+Add link: gcn --> rad	266.38
+Add link: scn --> q2	262.38
+Add link: scn --> chi6	249.13
+Add link: chi3 --> q6	179.98
+Add link: chi3 --> q6avg	101.94
+Add link: q6q6 --> ba1max	98.49
+Add link: chi3 --> q4avg	85.05
+Add link: chi3 --> centParam	75.85
+Add link: q6q6 --> q6avg	73.20
+Add link: q2avg --> rad	49.52
+Add link: q6q6 --> q12avg	49.32
+Add link: chi6 --> q2	35.67
+Add link: ba1avg --> q12avg	34.55
+Add link: scn --> q6avg	25.06
+Add link: gcn --> q2avg	19.93
+Add link: scn --> chi3	18.69
+Add link: q6q6 --> chi3	34.42
+Add link: scn --> q12avg	18.49
+Add link: q6q6 --> chi6	14.91
+Add link: ba1avg --> centParam	9.82
+Add link: q6q6 --> q4avg	8.86
+Add link: centParam --> class4	4.93
+Add link: scn --> q6	4.90
+Add link: ba1avg --> q4avg	4.62
+Add link: ba1max --> q6	15.83
+Add link: scn --> ba1max	4.51
+Add link: gcn --> ba1avg	4.08
+Add link: scn --> q4avg	3.40
+Add link: scn --> rad	0.61

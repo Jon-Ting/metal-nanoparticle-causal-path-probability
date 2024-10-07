@@ -1,0 +1,126 @@
+Author: Jonathan Ting
+Date: 24/9/24
+This file records the links added in the process of interactive structure learning of Bayesian networks (BNs) that predict the box-counting dimension of monometallic nanoparticles and their corresponding motivation values. The aim of the exercise is to generate plausible BNs that could provide insights for experimental designs of monometallic nanoparticles. 
+
+Instructions to open CSV files in OpenMarkov (version 0.3.4) and settings for BN learning:
+- Run OpenMarkov-0.3.4.exe
+- Tools > Learning 
+- > General
+	- Database: locate the data CSV file
+	- Algorithm: Hill climbing
+	- > Options: 
+		- Metric: K2
+		- Alpha parameter (Laplace-like correction): 0.5
+	- Learning type: Interactive learning
+- > Model network
+	- Choose Model Net: Do not use any model network
+- > Preprocessing
+	- Discretize: Equal frequency intervals
+	- Treat missing values: Default (Specify for each variable -- Keep records with missing values)
+	- Use all variables
+	- Check same number of intervals: 3
+- > Learn
+- A tab named 'Interactive learning' containing link editing descriptions (e.g. Add link: q6q6_T_11 --> N_atom_surface) and the corresponding Motivation values will then appear.
+
+The settings and rules of interactive structure learning is as follow:
+- Check "Only allowed edits" (prevents cyclic DAG) and "Only positive edits" (prevents negative scores)
+- Order need to be strictly followed because each edition might alter the following edition options
+- Applying link editions means deciding that causal relationship is plausible in the stated direction according to domain expertise, while blocking indicates that it is believed/assumed that the directional causal relationship is not possible.
+- Blocked editions could be found under "Show blocked" and "Undo" button is available if mistakes were made accidentally
+- The Interactive learning tab shows at most 8 edition options simultaneously.
+
+Standardised procedure:
+- Come up with a set of domain knowledge rules.
+- Follow the domain knowledge rule set (the degree to which it is followed could be set as a variable).
+- Always consider the edit with the greatest motivation value first.
+- Don't need to bother blocking the edits until all remaining edits proposed are unacceptable, blocking doesn't modify the motivation values of any edit.
+
+The calculation of the weighted probability of each causal path was conducted and tabulated in the Excel spreadsheet in this folder (manual version used to be ProbCalc.xlsx, now superseded by pathMotivations_{METRIC}.xlsx). Column A signifies the output variable. Columns B-D the motivation values of the links that are involved in the paths identified. The variables involved in the calculation of weighted path probability are shown in columns E-H. Below is a brief explanation of the variables:
+PathProbability = product of the normalised motivation values of the links involved in a given path
+PathPercentage = PathProbability in percentage
+
+Remaining questions:
+- What does proposal of inverting and removing links mean? If it means that by doing so the structure of the network better fits the joint probability then does it mean that the motivation values can't be used as reliable measure for path probability?
+- How significant are the differences in motivation values between options of edits? Are they distinguishable statistically?
+- What happens when you use different metric scores (e.g. K2)? Some of the links are different (in terms of absence/presence), but the causal directions are consistent due to the enforcement of domain knowledge rules encoding.
+- When can we safely ignore causal link suggestions (motivation values that are small enough to neglect)?
+
+
+Domain Knowledge Rules Encoded:
+- General direction in causal chains: Synthesis parameters > Coordination features > Crystallographic features > Surface structural features > Nanoparticle topological features > Box-counting dimension
+- Features within each group/layer cannot cause each other
+
+Add link: q6q6_T_11 --> N_atom_surface	66.34
+Add link: MM_SCN_10 --> q6q6_T_11	49.75
+Add link: MM_SCN_10 --> HCP	39.86
+Add link: MM_SCN_10 --> q6q6_S_3	39.12
+Add link: q6q6_avg_surf --> MM_BL_min	35.17
+Add link: time --> q6q6_avg_surf	33.74
+Add link: MM_TCN_14 --> Curve_11-20	33.01
+Add link: q6q6_avg_surf --> MMM_BA1_avg	31.19
+Add link: MM_SCN_10 --> FCC	30.41
+Add link: q6q6_T_11 --> Curve_41-50	27.62
+Add link: q6q6_avg_surf --> MM_BL_avg	25.21
+Add link: FCC --> N_atom_surface	22.30
+Add link: q6q6_T_11 --> Curve_31-40	21.22
+Add link: MM_SCN_12 --> N_atom_surface	20.38
+Add link: MM_SCN_12 --> q6q6_T_13	19.54
+Add link: q6q6_S_3 --> R_diff	18.83
+Add link: T --> q6q6_avg_surf	15.36
+Add link: MM_SCN_7 --> q6q6_T_11	15.16
+Add link: MM_SCN_6 --> FCC	14.74
+Add link: Curve_41-50 --> R_skew	14.42
+Add link: time --> MM_BCN_avg	13.31
+Add link: N_atom_surface --> DBoxEX	13.31
+Add link: MM_SCN_4 --> q6q6_B_7	11.38
+Add link: MM_SCN_avg --> Volume	10.53
+Add link: MM_SCN_10 --> MMM_BA1_avg	10.46
+Add link: MM_SCN_8 --> FCC	10.22
+Add link: MM_SCN_6 --> q6q6_T_11	10.18
+Add link: MM_SCN_12 --> q6q6_B_4	9.55
+Add link: MM_SCN_7 --> S_110	9.38
+Add link: MM_SCN_avg --> MM_BL_avg	9.24
+Add link: MM_SCN_8 --> S_100	8.77
+Add link: MM_SCN_10 --> DECA	8.16
+Add link: q6q6_S_3 --> N_atom_surface	7.10
+Add link: MM_SCN_4 --> Curve_41-50	7.04
+Add link: MM_TCN_14 --> q6q6_B_7	6.92
+Add link: tau --> R_diff	6.76
+Add link: S_111 --> R_diff	8.60
+Add link: MM_SCN_10 --> Curve_11-20	5.80
+Add link: MM_SCN_10 --> S_311	5.44
+Add link: MM_SCN_7 --> FCC	4.87
+Add link: MM_SCN_12 --> q6q6_S_3	4.83
+Remove link: q6q6_T_11 --> N_atom_surface	4.22
+Add link: time --> MM_SCN_3	3.89
+Add link: MM_TCN_15 --> q6q6_avg_surf	3.59
+Add link: MM_SCN_8 --> DBoxEX	3.42
+Add link: Volume --> DBoxEX	3.35
+Add link: MM_SCN_12 --> q6q6_S_12	3.16
+Add link: T --> MM_BL_min	3.01
+Add link: FCC --> S_111	2.67
+Add link: S_111 --> N_atom_surface	2.33
+Add link: q6q6_T_13 --> Curve_11-20	2.26
+Add link: DECA --> MM_BL_avg	2.24
+Add link: DECA --> Curve_41-50	2.15
+Add link: MM_TCN_15 --> R_skew	1.87
+Add link: MM_TCN_15 --> q6q6_S_3	1.86
+Add link: MM_TCN_11 --> q6q6_B_7	1.79
+Add link: S_110 --> DBoxEX	1.50
+Add link: S_311 --> DBoxEX	2.41
+Add link: MM_SCN_8 --> q6q6_T_11	1.16
+Add link: MM_SCN_6 --> HCP	1.15
+Add link: Curve_41-50 --> R_diff	1.15
+Add link: MM_SCN_12 --> Curve_11-20	1.03
+Add link: q6q6_S_3 --> Curve_31-40	1.02
+Add link: MM_TCN_15 --> R_diff	1.01
+Add link: tau --> q6q6_avg_surf	1.00
+Add link: time --> MM_SCN_4	0.93
+Add link: MM_TCN_11 --> q6q6_B_4	0.52
+Add link: MM_TCN_14 --> q6q6_B_4	1.73
+Add link: MM_BCN_avg --> q6q6_avg_surf	0.39
+Add link: MM_TCN_15 --> q6q6_B_4	0.28
+Add link: S_100 --> R_diff	0.19
+Add link: MM_BCN_avg --> MMM_BA1_avg	0.11
+Add link: S_311 --> MM_BL_avg	0.11
+Add link: HCP --> R_skew	0.02
