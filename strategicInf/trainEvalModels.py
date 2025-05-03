@@ -19,7 +19,8 @@ TEST_SET_FRACTION = 0.2
 PLOT_COLOURS = ['#212121', '#3F51B5', '#303F9F', '#FF5252', '#D32F2F']
 mpl.rcParams['axes.prop_cycle'] = mpl.cycler(color=['#303F9F', '#FF5252', '#D32F2F'])
 
-FIG_DIR = '/mnt/c/Users/ASUS/Documents/PhD/Workstation/PaperDrafts/metal-nanoparticle-causal-path-probability/figs'
+# FIG_DIR = '/mnt/c/Users/ASUS/Documents/PhD/Workstation/PaperDrafts/metal-nanoparticle-causal-path-probability/figs'
+FIG_DIR = '/scratch/q27/jt5911/metal-nanoparticle-causal-path-probability/figs'
 
 
 def rmNullLowVarFeats(featsDF, rmNull=False, varThresh=0.0, verbose=False):
